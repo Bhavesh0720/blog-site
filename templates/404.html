@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Page Not Found</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,600,700" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      color: #fff;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .error-container {
+      height: 100vh;
+    }
+
+    .error-code {
+      font-size: 120px;
+      font-weight: 700;
+      letter-spacing: 5px;
+    }
+
+    .error-text {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .btn-home {
+      border-radius: 50px;
+      padding: 10px 25px;
+      font-weight: 500;
+    }
+
+    .illustration {
+      max-width: 350px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container d-flex flex-column justify-content-center align-items-center text-center error-container">
+
+  <!-- /<img src="{% static 'images/404.svg' %}" alt="404 illustration" class="illustration"> -->
+
+  <div class="error-code">404</div>
+
+  <div class="error-text">
+    Oops! The page you're looking for doesn't exist.
+  </div>
+
+  <p class="text-light mb-4">
+    It might have been removed, renamed, or never existed.
+  </p>
+
+  <a href="{% url 'home' %}" class="btn btn-warning btn-home">Go Back Home</a>
+
+</div>
+
+</body>
+</html>
