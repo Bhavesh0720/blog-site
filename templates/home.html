@@ -19,7 +19,7 @@
           </p>
 
           <p class="lead mb-0">
-            <a href="#" class="text-white font-weight-bold">
+            <a href="{% url 'blogs' post.slug %}" class="text-white font-weight-bold">
               Continue reading...
             </a>
           </p>
@@ -41,7 +41,7 @@
           <div class="card border-0 h-100 shadow-sm">
 
             <div class="card-body">
-              <h4>{{ post.title }}</h4>
+              <h4><a href="{% url 'blogs' post.slug %}" class="text-dark">{{ post.title }}</a></h4>
 
               <small class="text-muted d-block mb-2">
                 {{ post.created_at|timesince }} ago |
@@ -72,7 +72,7 @@
         <div class="card border-0 mb-3 shadow-sm">
           <div class="card-body">
 
-            <h4>{{ post.title }}</h4>
+            <h4><a href="{% url 'blogs' post.slug %}" class="text-dark">{{ post.title }}</a></h4>
 
             <small class="text-muted d-block mb-2">
               {{ post.created_at|timesince }} ago |

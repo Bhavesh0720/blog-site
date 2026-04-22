@@ -17,3 +17,11 @@ def post_by_category(request, pk):
         'category':category,
     }
     return render(request, 'post_by_category.html', con)
+
+
+def blogs(request, slug):
+    blog_post = get_object_or_404(Blog, slug=slug)
+    con = {
+        'blog_post':blog_post,
+    }
+    return render(request, 'blogs.html', con)
