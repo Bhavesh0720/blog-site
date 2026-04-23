@@ -40,8 +40,16 @@
           </form>
         </div>
         <div class="col-4 d-flex justify-content-end align-items-center">
-          <a class="btn btn-sm btn-warning" href="#">Login</a>
-          <a class="btn btn-sm btn-outline-secondary ml-2" href="{% url 'register' %}">Register</a>
+          {% if not user.is_authenticated %}
+            <a class="btn btn-sm btn-warning" href="{% url 'login' %}">Login</a>
+            <a class="btn btn-sm btn-outline-secondary ml-2" href="{% url 'register' %}">Register</a>
+          {% else %}
+            <div style="color: blue;">
+              <span>Welcome, {{ user.username }}!</span>
+              &emsp;
+              <a class="btn btn-sm btn-danger" href="{% url 'logout' %}">Logout</a>
+            </div>
+          {% endif %}
         </div>
 
       </div>
