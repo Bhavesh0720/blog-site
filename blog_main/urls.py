@@ -24,10 +24,21 @@ from blogs import views as blogsview
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+
+    # category endpoint
     path('category/', include('blogs.urls')),
-    path('<slug:slug>/', blogsview.blogs, name='blogs'),
+
+    # blog endpoint
+    path('blogs/<slug:slug>/', blogsview.blogs, name='blogs'),
+
     # search endpoint 
     path('blog/search/', blogsview.search, name='search'),
+
+    # user(login, register) endpoint
     path('user/', include('users.urls')),
+
+    # dashboard endpoint
+    path('dashboard/', include('dashboards.urls')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

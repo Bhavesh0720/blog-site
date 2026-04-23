@@ -17,6 +17,9 @@
 
   <!-- Custom CSS -->
   <link href="{% static 'css/blog.css' %}" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -45,7 +48,7 @@
             <a class="btn btn-sm btn-outline-secondary ml-2" href="{% url 'register' %}">Register</a>
           {% else %}
             <div style="color: blue;">
-              <span>Welcome, {{ user.username }}!</span>
+              <span><a class="btn btn-sm btn-primary" href="{% url 'dashboard' %}">Dashboard</a></span>
               &emsp;
               <a class="btn btn-sm btn-danger" href="{% url 'logout' %}">Logout</a>
             </div>
@@ -60,7 +63,7 @@
       <nav class="nav d-flex justify-content-between flex-wrap">
 
         {% for cat in categories %}
-          <a class="p-2 text-muted" href="{% url 'post_by_category' cat.pk %}">
+          <a class="p-2 text-muted text-dark" href="{% url 'post_by_category' cat.pk %}">
             {{ cat.category_name }}
           </a>
         {% empty %}
