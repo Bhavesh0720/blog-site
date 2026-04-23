@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <div class="row">
+
+        <!-- Left Sidebar -->
+        <!-- Include here -->
+        {% include 'dashboard/sidebar.html' %}
+
+        <div class="col-md-10">
+            <!-- Header Row -->
+            <div class="d-flex align-items-center position-relative mb-3">
+                
+                <!-- Center Title -->
+                <h3 class="mx-auto mb-0">All Blog Posts</h3>
+
+                <!-- Right Button -->
+                <a href="{% url 'add_post' %}" class="btn btn-success position-absolute" style="right: 0;">
+                    <i class="fa-solid fa-plus"></i>&nbsp; Add New
+                </a>
+
+            </div>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Author</th>
+                        <th>Status</th>
+                        <th>Featured</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for post in posts %}
+                        <tr>
+                            <th>{{ forloop.counter }}</th>
+                            <td>{{ post }}</td>
+                            <td>{{ post.category }}</td>
+                            <td>{{ post.author }}</td>
+                            <td>{{ post.status }}</td>
+                            <td>{{ post.is_featured }}</td>
+                            <td>
+                                <a href="">
+                                    <i class="fas fa-edit text-success"></i>
+                                </a>
+                                &nbsp;
+                                <a href="{% url 'delete_post' post.pk %}">
+                                    <i class="fa-solid fa-trash text-danger"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
