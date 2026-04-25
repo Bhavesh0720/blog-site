@@ -16,15 +16,14 @@
             Posted on {{ blog_post.created_at }} by {{ blog_post.author }}
           </div>
 
-          <a class="badge bg-warning text-decoration-none text-light" href="{% url 'post_by_category' blog_post.category.pk %}">
+          <a class="badge bg-warning text-decoration-none text-light"
+            href="{% url 'post_by_category' blog_post.category.pk %}">
             {{ blog_post.category }}
           </a>
         </header>
 
         <figure class="mb-4">
-          <img class="img-fluid rounded"
-               src="{{ blog_post.featured_image.url }}"
-               alt="Blog image">
+          <img class="img-fluid rounded" src="{{ blog_post.featured_image.url }}" alt="Blog image">
         </figure>
 
         <section class="mb-5">
@@ -36,32 +35,101 @@
             {{ blog_post.blog_body }}
           </p>
 
-          <!-- COMMENTS -->
-          <h4>Comments (2)</h4>
-
-          <div class="card mt-2">
-            <div class="card-body">
-              <p class="card-text mb-0">Great article! Very informative.</p>
-              <small>By Alice | 2 hours ago</small>
-            </div>
-          </div>
-
-          <div class="card mt-2">
-            <div class="card-body">
-              <p class="card-text mb-0">AI is definitely the future.</p>
-              <small>By Bob | 1 day ago</small>
-            </div>
-          </div>
-
-          <br>
-
           <!-- COMMENT FORM -->
+          {% if user.is_authenticated %}
           <div class="form-group">
-            <form>
-              <textarea class="form-control" placeholder="Write your comment"></textarea>
-              <input type="submit" value="Submit" class="btn btn-primary mt-2">
+            <form action="" method="POST" class="p-4 border rounded bg-light shadow-sm">
+              {% csrf_token %}
+
+              <h5 class="mb-3 font-weight-bold">Leave a Review</h5>
+
+              <!-- Rating -->
+              <div class="form-group">
+                <label class="font-weight-bold d-block">Your Rating</label>
+                <div>
+                  <label class="mr-2">
+                    <input type="radio" name="rating" value="1"> <i class="fa fa-star text-warning"></i>
+                  </label>
+                  <label class="mr-2">
+                    <input type="radio" name="rating" value="2"> <i class="fa fa-star text-warning"></i><i
+                      class="fa fa-star text-warning"></i>
+                  </label>
+                  <label class="mr-2">
+                    <input type="radio" name="rating" value="3"> <i class="fa fa-star text-warning"></i><i
+                      class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i>
+                  </label>
+                  <label class="mr-2">
+                    <input type="radio" name="rating" value="4"> <i class="fa fa-star text-warning"></i><i
+                      class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i
+                      class="fa fa-star text-warning"></i>
+                  </label>
+                  <label class="mr-2">
+                    <input type="radio" name="rating" value="5"> <i class="fa fa-star text-warning"></i><i
+                      class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i
+                      class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Comment -->
+              <div class="form-group">
+                <label class="font-weight-bold">Your Comment</label>
+                <textarea name="comment" class="form-control" rows="4"
+                  placeholder="Write your comment here..."></textarea>
+              </div>
+
+              <!-- Submit -->
+              <button type="submit" class="btn btn-primary">
+                <i class="fa fa-paper-plane"></i> Submit
+              </button>
             </form>
           </div>
+          {% else %}
+          <h6 class="text-warning"><a href="{% url 'login' %}">login</a> required to write a comment!</h6>
+          {% endif %}
+
+          <!-- COMMENTS -->
+          <h4>Comments ({{ total_comments }})</h4>
+          <h6>Rating:
+            {% for _ in full_stars %}
+              <i class="fa-solid fa-star text-warning"></i> 
+            {% endfor %}
+            {% if half_stars %}
+              <i class="fa-solid fa-star-half-stroke text-warning"></i>
+            {% endif %}
+            {% for _ in empty_stars %}
+              <i class="fa-regular fa-star text-warning"></i>
+            {% endfor %}
+            ({{ avg_rating}}/5)
+          </h6>
+
+          {% if comments %}
+          {% for comment in comments %}
+          <div class="card mt-2">
+            <div class="card-body">
+
+              <!-- Top Row -->
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <small class="font-weight-bold">by {{ comment.user }} | {{ comment.created_at | timesince}} ago</small>
+
+                <div>
+                  {% for _ in comment.stars %}
+                  <i class="fa fa-star text-warning"></i>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Comment -->
+              <p class="card-text mb-2">{{ comment.comment }}</p>              
+
+            </div>
+          </div>
+          {% endfor %}
+          {% else %}
+          <span class="text-warning">No comments yet!</span>
+          {% endif %}
+
+          <br>
 
         </section>
       </article>

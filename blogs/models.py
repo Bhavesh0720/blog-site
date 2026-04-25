@@ -61,3 +61,27 @@ class SocialLinks(models.Model):
 
     def __str__(self):
         return self.media_name
+    
+
+class Comment(models.Model): 
+    RATING_CHOICES = (
+        (0,0),
+        (1,1),
+        (2,2),
+        (3,3),
+        (4,4),
+        (5,5)
+    )   
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    comment = models.TextField(max_length=500)
+    rating = models.SmallIntegerField(choices=RATING_CHOICES, default=0)
+    created_at =  models.DateTimeField(auto_now_add=True)
+    updated_at =  models.DateTimeField(auto_now=True)
+
+    def stars(self):
+        return range(self.rating)
+
+    def __str__(self):
+        return self.comment
