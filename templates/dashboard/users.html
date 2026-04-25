@@ -1,62 +1,73 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 
     <div class="row">
-
         <!-- Left Sidebar -->
         <!-- Include here -->
         {% include 'dashboard/sidebar.html' %}
 
-        <div class="col-md-10">
-            {% if perms.blogs.view_blog %}
+        <div class="col md">
+            {% if perms.auth.view_user %}
                 <!-- Header Row -->
                 <div class="d-flex align-items-center position-relative mb-3">
                     
                     <!-- Center Title -->
-                    <h3 class="mx-auto mb-0">All Blog Posts</h3>
+                    <h3 class="mx-auto mb-0">All Users</h3>
 
                     <!-- Right Button -->
-                    <a href="{% url 'add_post' %}" class="btn btn-success position-absolute" style="right: 0;">
+                    <a href="{% url 'add_user' %}" class="btn btn-success position-absolute" style="right: 0;">
                         <i class="fa-solid fa-plus"></i>&nbsp; Add New
                     </a>
 
                 </div>
-
                 <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Author</th>
-                            <th>Status</th>
-                            <th>Featured</th>
+                            <th>UserName</th>
+                            <th>email</th>
+                            <th>Active</th>
+                            <th>Staff</th>
+                            <th>SuperUser</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for post in posts %}
+                        {% for user in users %}
                             <tr>
                                 <th>{{ forloop.counter }}</th>
-                                <td>{{ post }}</td>
-                                <td>{{ post.category }}</td>
-                                <td>{{ post.author }}</td>
-                                <td>{{ post.status }}</td>
+                                <td>{{ user }}</td>
+                                <td>{{ user.email }}</td>
                                 <td>
-                                    {% if post.is_featured == True %}
+                                    {% if user.is_active %}
                                         <i class="fa-solid fa-circle-check text-success"></i>
                                     {% else %}
                                         <i class="fa-solid fa-circle-xmark text-danger"></i>
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <a href="{% url 'edit_post' post.pk %}">
+                                    {% if user.is_staff %}
+                                        <i class="fa-solid fa-circle-check text-success"></i>
+                                    {% else %}
+                                        <i class="fa-solid fa-circle-xmark text-danger"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if user.is_superuser %}
+                                        <i class="fa-solid fa-circle-check text-success"></i>
+                                    {% else %}
+                                        <i class="fa-solid fa-circle-xmark text-danger"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <!-- Edit -->
+                                    <a href="{% url 'edit_user' user.pk %}">
                                         <i class="fas fa-edit text-success"></i>
                                     </a>
                                     &nbsp;
-                                    <a href="{% url 'delete_post' post.pk %}">
+                                    <!-- Delete -->
+                                    <a href="{% url 'delete_user' user.pk %}">
                                         <i class="fa-solid fa-trash text-danger"></i>
                                     </a>
                                 </td>

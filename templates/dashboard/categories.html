@@ -11,49 +11,53 @@
 
     <!-- Right Side Content -->
     <div class="col-md-10">
-        <!-- Header Row -->
-        <div class="d-flex align-items-center position-relative mb-3">
-            
-            <!-- Center Title -->
-            <h3 class="mx-auto mb-0">All Categories</h3>
+        {% if perms.blogs.view_category %}
+            <!-- Header Row -->
+            <div class="d-flex align-items-center position-relative mb-3">
+                
+                <!-- Center Title -->
+                <h3 class="mx-auto mb-0">All Categories</h3>
 
-            <!-- Right Button -->
-            <a href="{% url 'add_category' %}" class="btn btn-success position-absolute" style="right: 0;">
-                <i class="fa-solid fa-plus"></i>&nbsp; Add New
-            </a>
+                <!-- Right Button -->
+                <a href="{% url 'add_category' %}" class="btn btn-success position-absolute" style="right: 0;">
+                    <i class="fa-solid fa-plus"></i>&nbsp; Add New
+                </a>
 
-        </div>
+            </div>
 
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Category Name</th>
-                    <th>Created at</th>
-                    <th>Updated at</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for cat in categories %}
+            <table class="table table-hover">
+                <thead>
                     <tr>
-                        <th>{{ forloop.counter }}</th>
-                        <td>{{ cat }}</td>
-                        <td>{{ cat.created_at }}</td>
-                        <td>{{ cat.updated_at }}</td>
-                        <td>
-                            <a href="{% url 'edit_category' cat.pk %}">
-                                <i class="fas fa-edit text-success"></i>
-                            </a>
-                            &nbsp;
-                            <a href="{% url 'delete_category' cat.pk %}">
-                                <i class="fa-solid fa-trash text-danger"></i>
-                            </a>
-                        </td>
+                        <th>#</th>
+                        <th>Category Name</th>
+                        <th>Created at</th>
+                        <th>Updated at</th>
+                        <th>Action</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for cat in categories %}
+                        <tr>
+                            <th>{{ forloop.counter }}</th>
+                            <td>{{ cat }}</td>
+                            <td>{{ cat.created_at }}</td>
+                            <td>{{ cat.updated_at }}</td>
+                            <td>
+                                <a href="{% url 'edit_category' cat.pk %}">
+                                    <i class="fas fa-edit text-success"></i>
+                                </a>
+                                &nbsp;
+                                <a href="{% url 'delete_category' cat.pk %}">
+                                    <i class="fa-solid fa-trash text-danger"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <h5 class="text-center text-danger">Permission Denied!</h5>
+        {% endif %}
     </div>
 
 </div>
