@@ -95,8 +95,29 @@ def add_post(request):
     }
     return render(request, 'dashboard/add_post.html', con)
 
+
 @login_required(login_url='login')
 def delete_post(request, pk):
     post = get_object_or_404(Blog, pk=pk)
     post.delete()
     return redirect('posts')
+
+
+@login_required(login_url='login')
+def edit_post(request, pk):
+    post = get_object_or_404(Blog, pk=pk)
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post1 = form.save()
+            post1.slug = generate_slug(post1.title)
+            post1.save()
+            return redirect('posts')
+
+    form = PostForm(instance=post)
+    con = {
+        'post':post,
+        'form':form,
+    }
+    return render(request, 'dashboard/edit_post.html', con)
