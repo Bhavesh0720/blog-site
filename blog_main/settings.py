@@ -128,7 +128,7 @@ STATICFILES_DIRS = [
     'blog_main/static',
 ]
 
-STATIC_URL = '/media/'
-STATIC_ROOT =  BASE_DIR /'media'
+MEDIA_URL = '/media/'
+MEDIA_ROOT =  BASE_DIR /'media'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
